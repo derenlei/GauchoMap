@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.ucsb.cs.cs190i.derenlei.derenlei_geofencing" >
+    package="edu.ucsb.cs.cs190i.derenlei.GauchoMap" >
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -30,7 +30,7 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-        <service android:name=".GeofenceTransitionService"/>
+        <service android:name="edu.ucsb.cs.cs190i.derenlei.GauchoMap.GeofenceTransitionService"/>
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
@@ -40,7 +40,7 @@
             android:value="AIzaSyDKUzCUi5DYgGhRblNaQE1uGQQPrxrC8lA" /-->
 
         <activity
-            android:name=".MapsActivity"
+            android:name="edu.ucsb.cs.cs190i.derenlei.GauchoMap.MapsActivity"
             android:label="@string/title_activity_maps" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="edu.ucsb.cs.cs190i.derenlei.derenlei_geofencing.DetailActivity" >
+            android:name="edu.ucsb.cs.cs190i.derenlei.GauchoMap.DetailActivity" >
         </activity>
     </application>
 

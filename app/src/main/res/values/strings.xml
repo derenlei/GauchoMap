@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">derenlei_Geofencing</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">GauchoMap</string>
+    <string name="title_activity_maps">GauchoMap</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7a719258799b056e64f7eefd0bbdb67196bd8706">
+        <dex dex="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_2eb29bcc547159770423f1676f9eeec656b9a071\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_827cfc26827ab1e3a3b6635f72d2806457674b7a\classes.dex" />
+    </item>
+
+</items>
