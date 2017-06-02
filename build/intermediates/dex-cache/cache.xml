@@ -3,11 +3,20 @@
 
     <item
         is-multidex="true"
+        jar="C:\Users\Deren Lei\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_eb377862f7f766befe5947ad7aafdf4266966c98\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="239eeb627222167817594d1a206bec94367c5693">
+        sha1="d2a4a8785c4574cf654e988a4b3cb365b50aa8d0">
         <dex dex="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_2eb29bcc547159770423f1676f9eeec656b9a071\classes.dex" />
     </item>
     <item
