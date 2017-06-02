@@ -73,8 +73,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle geoFenceLimits;
     private CameraPosition cameraPosition;
     private String markerId;
+    private LatLng targetMarkerPosition;
     private OkHttpClient client = new OkHttpClient();
-
+    private Marker CurrentPositionMarker;
     private static final String DETAIL_END = "https://maps.googleapis.com/maps/api/place/details/json";
     private static final String PLACES_KEY = "AIzaSyChQJFJOlllWIGylBRzDAbSdOnsP_8Dno0";
 
@@ -155,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng position) {
-
+                targetMarkerPosition = position;
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -163,9 +164,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     builder = new AlertDialog.Builder(MapsActivity.this);
                 }
                 builder.setTitle("Add Event")
-                        .setMessage("Add event to the GauchoMap")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage("Add an event to the GauchoMap!")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                // Get event photo from Camera or gallery.
+                                AlertDialog.Builder Fragmentbuilder;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    Fragmentbuilder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                                } else {
+                                    Fragmentbuilder = new AlertDialog.Builder(MapsActivity.this);
+                                }
+
+                                Fragmentbuilder.setTitle("Event Photo")
+                                        //.setMessage("Choose a photo for the event")
+                                        .setItems(new CharSequence[]
+                                                {"Choose From Camera", "Choose From Gallery", "Cancel"},
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // The 'which' argument contains the index position
+                                                // of the selected item
+                                                switch (which) {
+                                                    case 0:
+                                                        //camera
+                                                        break;
+                                                    case 1:
+                                                        //Gallery
+                                                        break;
+                                                    case 2:
+                                                        //return
+                                                        break;
+                                                }
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+
+
+
+                                //ToDo add Event Edit Fragment
                                 mMap.addMarker(new MarkerOptions()
                                         .position(position)
                                         .title("Edit this")
@@ -206,6 +244,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onMarkerDragStart(final Marker marker) {
+                if (marker == mCurrLocationMarker) {return;}
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -251,29 +290,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        /*
-        mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
 
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
-        }
-        */
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
