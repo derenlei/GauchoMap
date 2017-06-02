@@ -48,6 +48,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.R.string.yes;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.R.id.map;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.R.id.title;
 
@@ -72,7 +73,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle geoFenceLimits;
     private CameraPosition cameraPosition;
     private String markerId;
-
     private OkHttpClient client = new OkHttpClient();
 
     private static final String DETAIL_END = "https://maps.googleapis.com/maps/api/place/details/json";
@@ -154,27 +154,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener((GoogleMap.OnInfoWindowClickListener) this);
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapLongClick(LatLng position) {
-                mMap.addMarker(new MarkerOptions()
-                        .position(position)
-                        .title("Edit this")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                        .setDraggable(true);
-                LocationModel location = new LocationModel("Edit name", "Edit id", position);
-                locations.add(location);
-                mGeofenceList.add(new Geofence.Builder()
-                        .setRequestId("Edit this")
-                        .setCircularRegion(
-                                position.latitude,
-                                position.longitude,
-                                25
-                        )
-                        .setExpirationDuration(60 * 60 * 1000)
-                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                                Geofence.GEOFENCE_TRANSITION_EXIT)
-                        .build());
-                GeofencingRequest geofencingRequest = getGeofencingRequest();
-                addGeofence(geofencingRequest);
+            public void onMapLongClick(final LatLng position) {
+
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(MapsActivity.this);
+                }
+                builder.setTitle("Add Event")
+                        .setMessage("Add event to the GauchoMap")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                mMap.addMarker(new MarkerOptions()
+                                        .position(position)
+                                        .title("Edit this")
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                                        .setDraggable(true);
+                                LocationModel location = new LocationModel("Edit name", "Edit id", position);
+                                locations.add(location);
+                                mGeofenceList.add(new Geofence.Builder()
+                                        .setRequestId("Edit this")
+                                        .setCircularRegion(
+                                                position.latitude,
+                                                position.longitude,
+                                                25
+                                        )
+                                        .setExpirationDuration(60 * 60 * 1000)
+                                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                                                Geofence.GEOFENCE_TRANSITION_EXIT)
+                                        .build());
+                                GeofencingRequest geofencingRequest = getGeofencingRequest();
+                                addGeofence(geofencingRequest);
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, mMap.getCameraPosition().zoom));
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
             }
         });
         //GeofencingRequest geofencingRequest = getGeofencingRequest();
@@ -183,9 +205,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
 
             @Override
-            public void onMarkerDragStart(Marker marker) {
-                // TODO Auto-generated method stub
-                marker.remove();
+            public void onMarkerDragStart(final Marker marker) {
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(MapsActivity.this);
+                }
+
+                builder.setTitle("Delete event")
+                        .setMessage("Delete event from GauchoMap")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                marker.remove();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
 
             @Override
