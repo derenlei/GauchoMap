@@ -3,21 +3,120 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="/Users/Melvine/.android/build-cache/e820ffcdc57315eef5586def5f77781f53ec00cb/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="7a719258799b056e64f7eefd0bbdb67196bd8706">
-        <dex dex="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_2eb29bcc547159770423f1676f9eeec656b9a071\classes.dex" />
+        sha1="3f0a85e6000998ac322ddd50750e8cf91601a84b">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0b8dd7e059055c61c365cf1e2169f29dae559735/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="/Users/Melvine/.android/build-cache/b2cc07c8f8513c1940c67ad9b6d5daa2fbb566aa/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1d7832f7a48ed0876732eae13658a5f3075cf1a8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/a90583f641812b9b5f5bad4d008bdbde5d69dac4/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0c6924cbba8248329a8c58ead6a380efe7eee76e">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_64523e64e495f83624e77892eb18e022c4a9657f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d10ed18dc6f6d75f645d8b1ba863d36ed6be4a4d">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_7a6200c864b4f826ca12136141d23340f6d14296/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/1c8b7e97f40dcced01261cdbbf7881a1307993fb/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_dc58ccb3bdc7e09285e443cc9be9fe4c92af0f67/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.12.0/3742beff8024d0a0073d284b7c5e4cbf73d99b25/okio-1.12.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3742beff8024d0a0073d284b7c5e4cbf73d99b25">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.12.0_a9352787d098cb0110cebb7e340bea27c410549f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/ab95c5cbffe242c0ef90e338a10cd9f81f64ca6f/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1b4f1229c010c8cb33a8658faf925d884d7b3687/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/feb256dea4b8c9c656710d6944f7257c6e968a26/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_94aa08857ea894e10f6373a134a1e9d898401e4f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.7.0/6edbebdd8868708db718d15c09c4b28037fd487e/okhttp-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6edbebdd8868708db718d15c09c4b28037fd487e">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.7.0_4fa8ddb67b86e2338fc2d1d156153d12b6395268/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/f03ec1feae5aa4865792980ac88bbfa0163aefe5/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7979972576b6dbb1688052e42e5199abb54f81ba">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_14247c053f8347eb0dc049fdf50bacb83427c810/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/67922d8c998f4025a399e4060675a94318df1d20/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="69e74a8b1cbf5b8ee0fc0cca6bab1ac6c45efef8">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d9a9d101c96f6b0cdf75a3d4d2b529d9696019b4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/.android/build-cache/10814f4d8a1dbd1878c0b7e32bada5f3a140614c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="900a290779cdb4eb2e63b6f7806fd9f30ce4f60d">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4c9c5b071303e419fe0c3525935641030cec3661/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="C:\Users\Deren Lei\Desktop\UCSB\2017 Spring\CS190I\GauchoMap\GauchoMap\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_827cfc26827ab1e3a3b6635f72d2806457674b7a\classes.dex" />
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_04c3bcefa08859d39a6c2e761cfa4fcb33f69546/classes.dex" />
     </item>
 
 </items>

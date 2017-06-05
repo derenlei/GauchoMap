@@ -60,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener,GoogleMap.OnMarkerClickListener,
         GoogleMap.OnInfoWindowClickListener, ResultCallback<Status> {
 
+    public static boolean loggedIn = false;
     private GoogleMap mMap = null;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -81,6 +82,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!loggedIn) {
+            loggedIn = true;
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         setContentView(R.layout.activity_maps);
         locations = new ArrayList<>();
