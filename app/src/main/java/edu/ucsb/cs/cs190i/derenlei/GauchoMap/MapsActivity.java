@@ -7,24 +7,32 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationListener;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,21 +44,23 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.location.LocationServices;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.R.string.yes;
+import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.EventFragment.newInstance;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.R.id.map;
-import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.R.id.title;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -73,14 +83,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle geoFenceLimits;
     private CameraPosition cameraPosition;
     private String markerId;
+    private LatLng targetMarkerPosition;
     private OkHttpClient client = new OkHttpClient();
-
+    private Marker CurrentPositionMarker;
     private static final String DETAIL_END = "https://maps.googleapis.com/maps/api/place/details/json";
     private static final String PLACES_KEY = "AIzaSyChQJFJOlllWIGylBRzDAbSdOnsP_8Dno0";
+    //String used for photo
+    private static final int PICK_IMAGE_REQUEST = 9876;
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public String photoFileName;
+    public final String APP_TAG = "MyCustomApp";
+    //String used for database
+    static public GauchomapDatabaseHelper helper;
+    static public SQLiteDatabase DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GauchomapDatabaseHelper.Initialize(this);
+        helper = GauchomapDatabaseHelper.GetInstance();
 
         setContentView(R.layout.activity_maps);
         locations = new ArrayList<>();
@@ -113,7 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setZoomControlsEnabled(true);
         LatLng UCSB = new LatLng(34.4140, -119.8489);
         if (cameraPosition != null) {
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));;
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
         else {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(UCSB, 15));
@@ -151,11 +173,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         mMap.setOnMarkerClickListener(this);
-        mMap.setOnInfoWindowClickListener((GoogleMap.OnInfoWindowClickListener) this);
+        mMap.setOnInfoWindowClickListener(this);
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng position) {
-
+                targetMarkerPosition = position;
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -163,9 +185,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     builder = new AlertDialog.Builder(MapsActivity.this);
                 }
                 builder.setTitle("Add Event")
-                        .setMessage("Add event to the GauchoMap")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage("Add an Tevent to the GauchoMap!")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                // Get event photo from Camera or gallery.
+                                AlertDialog.Builder Fragmentbuilder;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    Fragmentbuilder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                                } else {
+                                    Fragmentbuilder = new AlertDialog.Builder(MapsActivity.this);
+                                }
+
+                                Fragmentbuilder.setTitle("Event Photo")
+                                        //.setMessage("Choose a photo for the event")
+                                        .setItems(new CharSequence[]
+                                                        {"Choose From Camera", "Choose From Gallery", "Cancel"},
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // The 'which' argument contains the index position
+                                                        // of the selected item
+                                                        switch (which) {
+                                                            case 0:
+                                                                //camera
+                                                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                                                photoFileName = "image" + System.currentTimeMillis() + ".jpg";
+                                                                intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+                                                                if (intent.resolveActivity(getPackageManager()) != null) {
+                                                                    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                                                                }
+                                                                break;
+                                                            case 1:
+                                                                //Gallery
+                                                                Intent galleryIntent = new Intent();
+                                                                galleryIntent.setType("image/*");
+                                                                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                                                                photoFileName = "image" + System.currentTimeMillis() + ".jpg";
+                                                                galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName));
+                                                                startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
+                                                                break;
+                                                            case 2:
+                                                                //return
+                                                                break;
+                                                        }
+                                                    }
+                                                })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+
+
+
+                                //ToDo add Event Edit Fragment
                                 mMap.addMarker(new MarkerOptions()
                                         .position(position)
                                         .title("Edit this")
@@ -206,6 +277,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onMarkerDragStart(final Marker marker) {
+                if (marker == mCurrLocationMarker) {return;}
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(MapsActivity.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -246,34 +318,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        GauchomapDatabaseHelper.GetInstance().close();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        /*
-        mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
 
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
-        }
-        */
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -308,7 +358,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        GauchomapDatabaseHelper.GetInstance().close();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -432,12 +482,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ).setResultCallback(this);
     }
 
+
     @Override
     public void onResult(@NonNull Status status) {
         if (status.isSuccess()){
             //drawGeofence();
         }
     }
+
 
     private void drawGeofence(){
         if ( geoFenceLimits != null)
@@ -515,6 +567,85 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerId = (String) marker.getTag();
         marker.showInfoWindow();
         return true;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
+                if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+                    if (resultCode == RESULT_OK) {
+                        Toast.makeText(this, "Picture was taken!", Toast.LENGTH_SHORT).show();
+                        Uri takenPhoto = getPhotoFileUri(photoFileName);
+                        Double longitude = targetMarkerPosition.longitude;
+                        Double latitude = targetMarkerPosition.latitude;
+                        EventFragment frag = newInstance(takenPhoto,15.5,15.5);
+                        frag.show(getSupportFragmentManager().beginTransaction(), "tag");
+                        //storephoto(takenPhoto.toString());
+                    } else { // Result was a failure
+                        Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            case PICK_IMAGE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    // if we are here, everything processed okay
+
+                    if (requestCode == PICK_IMAGE_REQUEST) {
+                        // if we are here, we are hearing back from image gallery
+                        Uri takenPhoto = data.getData();
+                        Double longitude = targetMarkerPosition.longitude;
+                        Double latitude = targetMarkerPosition.latitude;
+                        EventFragment frag = newInstance(takenPhoto,longitude,latitude);
+                        frag.show(getSupportFragmentManager().beginTransaction(), "tag");
+                        String uri = data.getData().toString();
+                        //storephoto(uri);
+                    }
+                }
+                break;
+
+        }
+    }
+
+    public Uri getPhotoFileUri(String fileName) {
+        // Only continue if the SD Card is mounted
+        if (isExternalStorageAvailable()) {
+            // Get safe storage directory for photos
+            // Use `getExternalFilesDir` on Context to access package-specific directories.
+            // This way, we don't need to request external read/write runtime permissions.
+            File mediaStorageDir = new
+                    File( getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+            // Create the storage directory if it does not exist
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+                Log.d(APP_TAG, "failed to create directory");
+            }
+            // Return the file target for the photo based on filename
+            File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
+            // wrap File object into a content provider, required for API >= 24
+            return FileProvider.getUriForFile(this, "com.codepath.fileprovider", file);
+        }
+        return null;
+    }
+
+    // Returns true if external storage for photos is available
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GauchomapDatabaseHelper.GetInstance().close();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        // Show your dialog here (this is called right after onActivityResult)
     }
 
     @Override
