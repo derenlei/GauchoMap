@@ -5,10 +5,23 @@
     tools:context="edu.ucsb.cs.cs190i.derenlei.GauchoMap.MapViewFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView2"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="428dp"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="378dp"
+            android:text="this is map view" />
+    </LinearLayout>
+
 
 </FrameLayout>

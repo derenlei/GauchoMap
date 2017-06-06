@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +20,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static boolean loggedIn = false;
-    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     public static ListViewFragment listFragment;
     public static MapViewFragment mapFragment;
 
@@ -28,17 +28,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if(!loggedIn) {
-//            loggedIn = true;
-//            Intent intent = new Intent(this, LoginActivity.class);
-//            startActivity(intent);
-//        }
+        if(!loggedIn) {
+            loggedIn = true;
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        toolbar.getContentInsetEnd();
-        toolbar.setPadding(0, 0, 0, 0);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
 
@@ -59,6 +56,7 @@ public class MainActivity extends AppCompatActivity
             mapFragment = new MapViewFragment();
         }
 
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, mapFragment);
         ft.commit();
     }
@@ -100,15 +98,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.map_view) {
             ft.replace(R.id.fragment_container, mapFragment);
+            ft.commit();
         } else if (id == R.id.list_view) {
             ft.replace(R.id.fragment_container, listFragment);
+            ft.commit();
         } else if (id == R.id.setting) {
 //            ft.replace(R.id.fragment_container, mapFragment);
         } else if (id == R.id.logout) {
-//            ft.replace(R.id.fragment_container, mapFragment);
+            loggedIn = false;
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

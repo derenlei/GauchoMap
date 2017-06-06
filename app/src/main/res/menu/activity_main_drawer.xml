@@ -16,7 +16,7 @@
         <item
             android:id="@+id/list_view"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="Nearby Events" />
+            android:title="Events Nearby" />
         <item
             android:id="@+id/explore"
             android:icon="@android:drawable/ic_menu_help"
