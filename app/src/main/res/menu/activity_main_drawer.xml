@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/my_events"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="My Events" />
+        <item
+            android:id="@+id/map_view"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="Map" />
+        <item
+            android:id="@+id/list_view"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="Nearby Events" />
+        <item
+            android:id="@+id/explore"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="Explore" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@android:drawable/ic_menu_close_clear_cancel"
+            android:title="Log Out" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/setting"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Settings" />
+    </group>
+
+
+</menu>
