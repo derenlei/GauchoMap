@@ -15,6 +15,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="472c9118-d529-42d2-ade3-e9c4a2bab019" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="derenlei_Geofencing.iws" />
@@ -68,8 +73,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsb/cs/cs190i/derenlei/GauchoMap/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+            <state relative-caret-position="365">
+              <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -2258,7 +2263,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="device.picker.selection" value="0abeed1a" />
+    <property name="device.picker.selection" value="Nexus_7_API_23" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../cs190i_hw4_starter" />
   </component>
   <component name="RecentsManager">
@@ -2665,7 +2670,14 @@
       <option name="project" value="LOCAL" />
       <updated>1496781506845</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="drawer complete.">
+      <created>1497047773951</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1497047773951</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2685,7 +2697,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3156274" sideWeight="0.22136872" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23500612" sideWeight="0.49569893" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23500612" sideWeight="0.49569893" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17598188" sideWeight="0.49614644" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17598188" sideWeight="0.50385356" order="7" side_tool="true" content_ui="tabs" />
@@ -2845,6 +2857,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="409">
           <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
+          <folding>
+            <element signature="method#onConnectionFailed#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onLocationChanged#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onConnected#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onConnectionSuspended#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#buildGoogleApiClient#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#checkLocationPermission#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onRequestPermissionsResult#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#getGeofencePendingIntent#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#addGeofence#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#drawGeofence#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#makeNotificationIntent#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onInfoWindowClick#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#getAndGotoUrl#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onMarkerClick#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onSaveInstanceState#0;class#MapsActivity#0" expanded="false" />
+            <element signature="method#onRestoreInstanceState#0;class#MapsActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2892,6 +2922,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3068,8 +3099,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsb/cs/cs190i/derenlei/GauchoMap/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        <state relative-caret-position="365">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding />
         </state>
       </provider>
