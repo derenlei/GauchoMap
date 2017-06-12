@@ -46,7 +46,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void sendMessage(View view)
     {
+        Bundle inBundle = getIntent().getExtras();
+
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        intent.putExtra("name", inBundle.get("name").toString());
+        intent.putExtra("surname", inBundle.get("surname").toString());
+        intent.putExtra("imageUrl", inBundle.get("imageUrl").toString());
         startActivity(intent);
     }
 

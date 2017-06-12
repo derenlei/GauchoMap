@@ -1,6 +1,7 @@
 package edu.ucsb.cs.cs190i.derenlei.GauchoMap;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.facebook.login.LoginManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +39,20 @@ public class MainActivity extends AppCompatActivity
 //            startActivity(intent);
 //        }
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+
+        Bundle inBundle = getIntent().getExtras();
+        String name = inBundle.get("name").toString();
+        String surname = inBundle.get("surname").toString();
+        String imageUrl = inBundle.get("imageUrl").toString();
+
+        TextView user_name = (TextView) hView.findViewById(R.id.user_name);
+        user_name.setText(name + " " + surname);
+
+        ImageView prof_pic = (ImageView) hView.findViewById(R.id.profile_icon);
+        prof_pic.setImageURI(Uri.parse(imageUrl));
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,7 +65,6 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         if(listFragment==null) {
@@ -57,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, mapFragment);
+        ft.replace(R.id.fragment_container, listFragment);
         ft.commit();
     }
 
@@ -101,17 +119,19 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.map_view) {
-            ft.replace(R.id.fragment_container, mapFragment);
-            ft.commit();
+            Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
+            MainActivity.this.startActivity(myIntent);
+//            ft.replace(R.id.fragment_container, mapFragment);
+//            ft.commit();
         } else if (id == R.id.list_view) {
             ft.replace(R.id.fragment_container, listFragment);
             ft.commit();
         } else if (id == R.id.setting) {
 //            ft.replace(R.id.fragment_container, mapFragment);
         } else if (id == R.id.logout) {
-            loggedIn = false;
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            LoginManager.getInstance().logOut();
+            Intent login = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(login);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

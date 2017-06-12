@@ -28,16 +28,16 @@
         android:layout_gravity="bottom|right"
         android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:tint="@android:color/white"
-            app:backgroundTint="#3D3D3D"
-            app:layout_anchor="@+id/include"
-            app:layout_anchorGravity="bottom|right"
-            app:srcCompat="@android:drawable/ic_menu_compass" />
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/fab_reset"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/fab_margin"-->
+            <!--android:tint="@android:color/white"-->
+            <!--app:backgroundTint="#3D3D3D"-->
+            <!--app:layout_anchor="@+id/include"-->
+            <!--app:layout_anchorGravity="bottom|right"-->
+            <!--app:srcCompat="@android:drawable/ic_menu_compass" />-->
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add"

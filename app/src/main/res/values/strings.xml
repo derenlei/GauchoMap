@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GauchoMap</string>
     <string name="title_activity_maps">GauchoMap</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Gaucho Map</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -20,7 +20,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">GauchoMap</string>
 
     <string name="action_settings">Settings</string>
 

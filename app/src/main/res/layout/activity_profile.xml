@@ -4,50 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7F1ED"
     tools:context="edu.ucsb.cs.cs190i.derenlei.GauchoMap.ProfileActivity">
 
     <LinearLayout
-        android:layout_width="344dp"
+        android:layout_width="568dp"
         android:layout_height="495dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:text="Welcome to GauchoMap:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="20dp"
-            android:layout_gravity="center_horizontal"/>
+            android:textSize="20dp" />
+
         <TextView
+            android:id="@+id/nameAndSurname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/nameAndSurname"
-            android:textSize="22dp"
-            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"/>
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
         <ImageView
+            android:id="@+id/profileImage"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:id="@+id/profileImage"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
 
-        <Button
-            android:id="@+id/button1"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="sendMessage"
-            android:text="Proceed to GauchoMap" />
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="logout"
-            android:text="Not you? Click to Log out" />
+            android:layout_height="495dp"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="sendMessage"
+                android:text="Proceed to GauchoMap" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="logout"
+                android:text="Not you? Click to Log out" />
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

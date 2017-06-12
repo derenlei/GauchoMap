@@ -1,18 +1,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="#3BA6B3">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:paddingTop="150px"
+        android:layout_height="500px"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gaucho Map"
+            android:textSize="62sp"
+            android:textColor="#ffffff"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+
+    </LinearLayout>
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_margin="4dp"
+        android:gravity="center"
+        android:paddingBottom="12dp"
         android:paddingTop="12dp"
-        android:paddingBottom="12dp"/>
-
+        />
 </LinearLayout>
 
 
