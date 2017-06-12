@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.ucsb.cs.cs190i.derenlei.GauchoMap.SettingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="150px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="150px"
+            android:weightSum="1">
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/range_setter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="100px"
+                android:paddingRight="30dp"
+                android:text="Range"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <SeekBar
+                android:id="@+id/seekBar_range"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.90" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="150px"
+            android:weightSum="1">
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/filter_by_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="100px"
+                android:paddingRight="30dp"
+                android:text="Filter by date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <SeekBar
+                android:id="@+id/seekBar_date"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.90" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="120px"
+            android:weightSum="1">
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/filter_by_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="100px"
+                android:paddingRight="30dp"
+                android:text="Filter by host"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.00" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

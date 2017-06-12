@@ -27,6 +27,10 @@ public class MainActivity extends AppCompatActivity
     public static boolean loggedIn = false;
     public static ListViewFragment listFragment;
     public static MapViewFragment mapFragment;
+    public static MyEventsFragment myeventsFragment;
+    public static SettingFragment settingFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,11 @@ public class MainActivity extends AppCompatActivity
 //            Intent intent = new Intent(this, LoginActivity.class);
 //            startActivity(intent);
 //        }
+
+//        if(!DatabaseFactory.is_empty()){
+//
+//        }
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView =  navigationView.getHeaderView(0);
@@ -73,9 +82,16 @@ public class MainActivity extends AppCompatActivity
         if(mapFragment==null){
             mapFragment = new MapViewFragment();
         }
+        if(myeventsFragment==null){
+            myeventsFragment = new MyEventsFragment();
+        }
+        if(settingFragment==null){
+            settingFragment = new SettingFragment();
+        }
+
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_container, listFragment);
+        ft.replace(R.id.fragment_container, myeventsFragment);
         ft.commit();
     }
 
@@ -126,8 +142,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.list_view) {
             ft.replace(R.id.fragment_container, listFragment);
             ft.commit();
+        } else if (id == R.id.my_events) {
+            ft.replace(R.id.fragment_container, myeventsFragment);
+            ft.commit();
         } else if (id == R.id.setting) {
-//            ft.replace(R.id.fragment_container, mapFragment);
+            ft.replace(R.id.fragment_container, settingFragment);
+            ft.commit();
         } else if (id == R.id.logout) {
             LoginManager.getInstance().logOut();
             Intent login = new Intent(MainActivity.this, LoginActivity.class);

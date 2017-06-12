@@ -25,5 +25,5 @@
     <string name="action_settings">Settings</string>
 
     <!--facebook login strings-->
-        <string name="facebook_app_id">1485663254827847</string>
+    <string name="facebook_app_id">1485663254827847</string>
 </resources>
