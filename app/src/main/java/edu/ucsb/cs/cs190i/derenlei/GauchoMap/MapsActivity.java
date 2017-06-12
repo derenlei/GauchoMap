@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -59,8 +60,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.R.attr.name;
+import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.DatabaseFactory.getNamelist;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.EventFragment.newInstance;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.R.id.map;
+import static java.lang.Boolean.FALSE;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -70,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationListener,GoogleMap.OnMarkerClickListener,
         GoogleMap.OnInfoWindowClickListener, ResultCallback<Status> {
 
-    private GoogleMap mMap = null;
+    private static GoogleMap mMap = null;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private Marker mCurrLocationMarker;
@@ -78,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationRequest mLocationRequest;
     public static ArrayList<LocationModel> locations;
     private WebServerController webServerController;
-    private List<Geofence> mGeofenceList = new ArrayList<>();
+    private static List<Geofence> mGeofenceList = new ArrayList<>();
     private PendingIntent mGeofencePendingIntent;
     private Circle geoFenceLimits;
     private CameraPosition cameraPosition;
@@ -96,14 +100,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //String used for database
     static public GauchomapDatabaseHelper helper;
     static public SQLiteDatabase DB;
+    public static Boolean setMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         GauchomapDatabaseHelper.Initialize(this);
         helper = GauchomapDatabaseHelper.GetInstance();
 
+
+        setMarker = false;
         setContentView(R.layout.activity_maps);
         locations = new ArrayList<>();
         //webServerController = new WebServerController();
@@ -140,6 +146,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(UCSB, 15));
         }
+
+        if(!DatabaseFactory.is_empty()) {
+            ArrayList<String> namelist = DatabaseFactory.getNamelist();
+            ArrayList<LatLng> locationlist = new ArrayList<>();
+            for (int i = 0; i < namelist.size(); i++) {
+                String name = namelist.get(i);
+                String uri = DatabaseFactory.getUri(name);
+                LatLng position = new LatLng(DatabaseFactory.getLatitude(uri), DatabaseFactory.getLongitude(uri));
+                locationlist.add(position);
+            }
+
+            for (int i = 0; i < namelist.size(); i++) {
+                mMap.addMarker(new MarkerOptions()
+                        .position(locationlist.get(i))
+                        .title(namelist.get(i))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                        .setDraggable(true);
+                LocationModel location = new LocationModel(namelist.get(i), DatabaseFactory.getUri(namelist.get(i)), locationlist.get(i));
+                locations.add(location);
+            /*
+            mGeofenceList.add(new Geofence.Builder()
+                    .setRequestId("name")
+                    .setCircularRegion(
+                            locationlist.get(i).latitude,
+                            locationlist.get(i).longitude,
+                            25
+                    )
+                    .setExpirationDuration(60 * 60 * 1000)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .build());
+            GeofencingRequest geofencingRequest = getGeofencingRequest();
+            addGeofence(geofencingRequest);
+            */
+
+            }
+        }
+
+
+
+
         mMap.setOnMapLoadedCallback(this);
         //locations = WebServerController.locations;
     }
@@ -186,7 +233,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 builder.setTitle("Add Event")
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage("Add an Tevent to the GauchoMap!")
+                        .setMessage("Add an event to the GauchoMap!")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Get event photo from Camera or gallery.
@@ -237,27 +284,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                                 //ToDo add Event Edit Fragment
-                                mMap.addMarker(new MarkerOptions()
-                                        .position(position)
-                                        .title("Edit this")
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                                        .setDraggable(true);
-                                LocationModel location = new LocationModel("Edit name", "Edit id", position);
-                                locations.add(location);
-                                mGeofenceList.add(new Geofence.Builder()
-                                        .setRequestId("Edit this")
-                                        .setCircularRegion(
-                                                position.latitude,
-                                                position.longitude,
-                                                25
-                                        )
-                                        .setExpirationDuration(60 * 60 * 1000)
-                                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                                                Geofence.GEOFENCE_TRANSITION_EXIT)
-                                        .build());
-                                GeofencingRequest geofencingRequest = getGeofencingRequest();
-                                addGeofence(geofencingRequest);
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, mMap.getCameraPosition().zoom));
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -267,6 +293,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
+
 
             }
         });
@@ -290,6 +317,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 marker.remove();
+                                DatabaseFactory.deletebyname(marker.getTitle());
+
+
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -442,7 +472,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private GeofencingRequest getGeofencingRequest() {
+    private static GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new
                 GeofencingRequest.Builder();
         builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
@@ -511,9 +541,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT).show();
-        getAndGotoUrl(markerId);
+
+        String url = DatabaseFactory.getUri(marker.getTitle());
+        LatLng position = marker.getPosition();
+        Double longitude = position.longitude;
+        Double latitude = position.latitude;
+        marker.remove();
+
+        //this line need to be changed
+        int User = 0;
+
+        EventFragment frag = newInstance(Uri.parse(url),User,longitude,latitude);
+        frag.show(getSupportFragmentManager().beginTransaction(), "tag");
+        //getAndGotoUrl(markerId);
     }
 
     protected void getAndGotoUrl(String markerPlaceId) {
@@ -582,7 +622,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Uri takenPhoto = getPhotoFileUri(photoFileName);
                         Double longitude = targetMarkerPosition.longitude;
                         Double latitude = targetMarkerPosition.latitude;
-                        EventFragment frag = newInstance(takenPhoto,15.5,15.5);
+
+                        //this line need to be changed
+                        int User = 0;
+
+                        EventFragment frag = newInstance(takenPhoto,User,longitude,latitude);
                         frag.show(getSupportFragmentManager().beginTransaction(), "tag");
                         //storephoto(takenPhoto.toString());
                     } else { // Result was a failure
@@ -599,7 +643,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Uri takenPhoto = data.getData();
                         Double longitude = targetMarkerPosition.longitude;
                         Double latitude = targetMarkerPosition.latitude;
-                        EventFragment frag = newInstance(takenPhoto,longitude,latitude);
+
+                        //this line need to be changed
+                        int User = 0;
+
+                        EventFragment frag = newInstance(takenPhoto,User,longitude,latitude);
                         frag.show(getSupportFragmentManager().beginTransaction(), "tag");
                         String uri = data.getData().toString();
                         //storephoto(uri);
@@ -665,6 +713,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             cameraPosition = bundle.getParcelable("cameraPosition");
 
 
+    }
+
+    public static void addMarker(LatLng position){
+        String name = DatabaseFactory.getNamebyloc(position.longitude,position.latitude);
+        mMap.addMarker(new MarkerOptions()
+                .position(position)
+                .title(name)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                .setDraggable(true);
+        LocationModel location = new LocationModel(name, DatabaseFactory.getUri(name), position);
+        locations.add(location);
+        mGeofenceList.add(new Geofence.Builder()
+                .setRequestId("name")
+                .setCircularRegion(
+                        position.latitude,
+                        position.longitude,
+                        25
+                )
+                .setExpirationDuration(60 * 60 * 1000)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                        Geofence.GEOFENCE_TRANSITION_EXIT)
+                .build());
+        GeofencingRequest geofencingRequest = getGeofencingRequest();
+        //addGeofence(geofencingRequest);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, mMap.getCameraPosition().zoom));
     }
 
 }

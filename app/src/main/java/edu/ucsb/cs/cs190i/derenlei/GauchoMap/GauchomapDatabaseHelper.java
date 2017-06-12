@@ -15,6 +15,8 @@ import java.util.List;
 
 public class GauchomapDatabaseHelper extends SQLiteOpenHelper {
     private static final String CreateTable = "CREATE TABLE IF NOT EXISTS Map( Name text PRIMARY KEY, " +
+            "User integer NOT NULL DEFAULT 0, "+
+            "Interest integer DEFAULT 0, "+
             "Uri text NOT NULL UNIQUE, " +
             "Event text NOT NULL, " +
             "Longitude decimal(18,5) NOT NULL, " +

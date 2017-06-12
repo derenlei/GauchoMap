@@ -39,12 +39,13 @@ public class EventFragment extends android.support.v4.app.DialogFragment  {
     private FragmentActivity fragmentActivity;
     public static FragmentManager fragmentManager;
 
-    public static EventFragment newInstance(Uri uri, Double longitude, Double latitude) {
+    public static EventFragment newInstance(Uri uri, int User, Double longitude, Double latitude) {
         EventFragment frag = new EventFragment();
         Bundle args = new Bundle();
         args.putString("title", uri.toString());
         args.putDouble("longitude", longitude);
         args.putDouble("latitude",latitude);
+        args.putInt("User",User);
         frag.setArguments(args);
         return frag;
     }
@@ -100,11 +101,12 @@ public class EventFragment extends android.support.v4.app.DialogFragment  {
                 String time = String.valueOf(event_time.getText());
                 Double longitude = (Double) getArguments().get("longitude");
                 Double latitude = (Double) getArguments().get("latitude");
-                DatabaseFactory.saveandgetName(name,Uri,event,longitude,latitude,time);
+                int User = (int)getArguments().get("User");
+                DatabaseFactory.saveandgetName(User,name,Uri,event,longitude,latitude,time);
                 DatabaseFactory.TEST(name);
                 DatabaseFactory.update();
                 LatLng position = new LatLng(latitude, longitude);
-                //MapsActivity.addMarker(position);
+                MapsActivity.addMarker(position);
                 getDialog().dismiss();
             }
         });

@@ -49,7 +49,7 @@ public class GeofenceTransitionService extends IntentService{
         int geoFenceTransition = geofencingEvent.getGeofenceTransition();
         // Check if the transition type
         if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER){
-                // ||geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ) {
+            // ||geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ) {
             // Get the geofence that were triggered
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
             // Create a detail message with Geofences received
@@ -68,10 +68,10 @@ public class GeofenceTransitionService extends IntentService{
 
         String status = null;
         if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER )
-         //   status = "";
+            //   status = "";
             status = "";
         //else if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT )
-         //   status = "Exiting ";
+        //   status = "Exiting ";
         return status + TextUtils.join( ", ", triggeringGeofencesList);
     }
 
@@ -112,7 +112,7 @@ public class GeofenceTransitionService extends IntentService{
                     .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                     .setAutoCancel(true)
                     .setPriority(Notification.PRIORITY_MAX);
-                    //.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView());
+            //.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView());
         }
         return notificationBuilder.build();
     }

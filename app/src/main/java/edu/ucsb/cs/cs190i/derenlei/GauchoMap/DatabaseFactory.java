@@ -6,6 +6,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static android.R.attr.name;
+
 /**
  * Created by Zichen Sun on 2/6/2017.
  */
@@ -14,18 +16,104 @@ public class DatabaseFactory {
     static GauchomapDatabaseHelper helper = MapsActivity.helper;
     static SQLiteDatabase DB = MapsActivity.DB;
     //Database helping function
-    static public String saveandgetName(String name, String url, String Event, Double Longitude, Double Latitude, String time){
+    //NEED
+    static public String saveandgetName(int user, String name, String url, String Event, Double Longitude, Double Latitude, String time){
         DB = helper.getWritableDatabase();
+        int Interest = 0;
         if(is_present(url)){
+            Interest = getInterest(url);
             DB.execSQL("DELETE FROM Map WHERE Uri = '" + url + "'");
         }
         if(name_is_present(name)){
+            Interest = getInterest(url);
             DB.execSQL("DELETE FROM Map WHERE Name = '" + name + "'");
         }
-        DB.execSQL("INSERT OR IGNORE INTO Map (Name,Uri,Event,Longitude,Latitude,Time) " +
-                "VALUES ('"+ name+"','"+url+"','"+Event+"','"+Longitude+"','"+Latitude+"','"+time+"');");
+        DB.execSQL("INSERT OR IGNORE INTO Map (User,Name,Uri,Event,Longitude,Latitude,Time,Interest) " +
+                "VALUES ('" + user +"','"+ name+ "','"+url+"','"+Event+"','"+Longitude+"','"+Latitude+"','"+time+"','"+Interest+"');");
         return getName(url);
     }
+    //need
+    static public void addInterest(String name,int number){
+        String url = getUri(name);
+        DB = helper.getWritableDatabase();
+        int Interest = getInterest(url);
+        Interest = Interest+number;
+        DB.execSQL("UPDATE Map SET Interest='"+Interest+"'WHERE Uri = '" + url + "'");
+    }
+
+    //NEED
+    static public int getUser(String name){
+        String url = getUri(name);
+        DB = helper.getReadableDatabase();
+        int User = 0;
+        Cursor cursor = DB.rawQuery("SELECT User FROM Map WHERE Map.Uri = '"+url+"'",null);
+        if(!is_present(url));
+        else{
+            cursor.moveToFirst();
+            User = cursor.getInt(0);
+            while (!cursor.isAfterLast()) {
+                User=cursor.getInt(0);
+                // do something useful with these
+                cursor.moveToNext();
+            }
+            //int result = cursor.getInt(0);
+            cursor.close();
+        }
+        return User;
+    }
+
+    static public int getUserByUri(String url){
+        DB = helper.getReadableDatabase();
+        int User = 0;
+        Cursor cursor = DB.rawQuery("SELECT User FROM Map WHERE Map.Uri = '"+url+"'",null);
+        if(!is_present(url));
+        else{
+            cursor.moveToFirst();
+            User = cursor.getInt(0);
+            while (!cursor.isAfterLast()) {
+                User=cursor.getInt(0);
+                // do something useful with these
+                cursor.moveToNext();
+            }
+            //int result = cursor.getInt(0);
+            cursor.close();
+        }
+        return User;
+    }
+    //NEED
+    static public int getInterest(String url){
+        DB = helper.getReadableDatabase();
+        int Interest = 0;
+        Cursor cursor = DB.rawQuery("SELECT Interest FROM Map WHERE Map.Uri = '"+url+"'",null);
+        if(!is_present(url));
+        else{
+            cursor.moveToFirst();
+            Interest = cursor.getInt(0);
+            while (!cursor.isAfterLast()) {
+                Interest=cursor.getInt(0);
+                // do something useful with these
+                cursor.moveToNext();
+            }
+            //int result = cursor.getInt(0);
+            cursor.close();
+        }
+        return Interest;
+    }
+
+    static public ArrayList<String> getNamelistOfUser(int User){
+        ArrayList<String> array = new ArrayList<>();
+        DB = helper.getReadableDatabase();
+        Cursor result = DB.rawQuery("SELECT Map.Name FROM Map WHERE Map.User = '"+User+"'",null);
+        result.moveToFirst();
+        String a = result.getString(0);
+        while (!result.isAfterLast()) {
+            array.add(result.getString(0));
+            result.moveToNext();
+        }
+        result.close();
+        return array;
+    }
+
 
     static public String getUri(String name){
         DB = helper.getReadableDatabase();
@@ -51,6 +139,31 @@ public class DatabaseFactory {
         String name = "";
         Cursor cursor = DB.rawQuery("SELECT Name FROM Map WHERE Map.Uri = '"+url+"'",null);
         if(!is_present(url));
+        else{
+            cursor.moveToFirst();
+            name =cursor.getString(0);
+            while (!cursor.isAfterLast()) {
+                name=cursor.getString(0);
+                // do something useful with these
+                cursor.moveToNext();
+            }
+            //int result = cursor.getInt(0);
+            cursor.close();
+        }
+        return name;
+    }
+
+    static public void deletebyname(String name){
+        DB=helper.getWritableDatabase();
+        DB.execSQL("DELETE FROM Map WHERE Name = '" + name + "'");
+    }
+
+
+    static public String getNamebyloc(Double log, Double alt){
+        DB = helper.getReadableDatabase();
+        String name = "";
+        Cursor cursor = DB.rawQuery("SELECT Name FROM Map WHERE Map.Longitude = '"+log+"' AND Map.Latitude = '"+alt+"'",null);
+        if(!loc_is_present(log,alt));
         else{
             cursor.moveToFirst();
             name =cursor.getString(0);
@@ -141,6 +254,23 @@ public class DatabaseFactory {
         }
         return Latitude;
     }
+
+    static public boolean is_empty(){
+        DB = helper.getReadableDatabase();
+        int count = 0;
+        Cursor cursor = DB.rawQuery("SELECT NAME FROM Map",null);
+        cursor.moveToFirst();
+        do{
+            count = cursor.getCount();
+            // do something useful with these
+            cursor.moveToNext();
+        }while(cursor.moveToNext());
+        //int result = cursor.getInt(0);
+        cursor.close();
+        return count == 0;
+    }
+
+
     static public boolean is_present(String url){
         DB = helper.getReadableDatabase();
         int count = 0;
@@ -160,6 +290,21 @@ public class DatabaseFactory {
         DB = helper.getReadableDatabase();
         int count = 0;
         Cursor cursor = DB.rawQuery("SELECT Name FROM Map WHERE Map.Name = '"+name+"'",null);if(cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                count = cursor.getCount();
+                // do something useful with these
+                cursor.moveToNext();
+            }
+            //int result = cursor.getInt(0);
+            cursor.close();
+        }
+        return count != 0;
+    }
+
+    static public boolean loc_is_present(Double log, Double alt){
+        DB = helper.getReadableDatabase();
+        int count = 0;
+        Cursor cursor = DB.rawQuery("SELECT Name FROM Map WHERE Map.Longitude = '"+log+"' AND Map.Latitude = '"+alt+"'",null);if(cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 count = cursor.getCount();
                 // do something useful with these

@@ -38,7 +38,7 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <service android:name=".GeofenceTransitionService" />
+        <service android:name="edu.ucsb.cs.cs190i.derenlei.GauchoMap.GeofenceTransitionService"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -71,22 +71,32 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
-                    android:name="com.facebook.sdk.ApplicationId"
-                    android:value="@string/facebook_app_id" />
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-                <activity
-                    android:name="com.facebook.FacebookActivity"
-                    android:label="@string/app_name"
-                    android:screenOrientation="portrait" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
 
 
 
-                <provider
-                    android:name="com.facebook.FacebookContentProvider"
-                    android:authorities="com.facebook.app.FacebookContentProvider"
-                    android:exported="true" />
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider"
+            android:exported="true" />
 
-                <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.codepath.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+        </provider>
 
     </application>
 
