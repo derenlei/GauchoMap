@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_04c3bcefa08859d39a6c2e761cfa4fcb33f69546/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="08595f6b8c393733d4bfc53da7b452a285f5803d">
+        <dex dex="/Users/Melvine/Development/AndroidStudioProjects/GauchoMap/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_7a6200c864b4f826ca12136141d23340f6d14296/classes.dex" />
+    </item>
+
+</items>

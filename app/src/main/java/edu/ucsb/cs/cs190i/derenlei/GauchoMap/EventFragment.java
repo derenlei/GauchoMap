@@ -104,7 +104,7 @@ public class EventFragment extends android.support.v4.app.DialogFragment  {
                 DatabaseFactory.TEST(name);
                 DatabaseFactory.update();
                 LatLng position = new LatLng(latitude, longitude);
-                MapsActivity.addMarker(position);
+                //MapsActivity.addMarker(position);
                 getDialog().dismiss();
             }
         });
