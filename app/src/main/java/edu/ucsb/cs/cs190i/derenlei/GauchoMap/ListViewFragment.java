@@ -41,31 +41,54 @@ public class ListViewFragment extends Fragment {
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 //
-//        if (!DatabaseFactory.is_empty()) {
-//            System.out.print("hi");
-//        }
+        if (!DatabaseFactory.is_empty()) {
+            System.out.print("hi");
+        }
+
+        ArrayList<String> namelist = DatabaseFactory.getNamelist();
+
+        for (int i = 0; i < namelist.size(); i++) {
+            String name = namelist.get(i);
+            String uri = DatabaseFactory.getUri(name);
+            String desc = "Melvin Nguyen";
+            String date = DatabaseFactory.getTime(uri);
+
+            View aCard = inflater.inflate(R.layout.card, container, false);
+            CardView card = (CardView) aCard.findViewById(R.id.cv);
+
+            TextView n = (TextView) card.findViewById(R.id.event_name);
+            TextView datevw = (TextView) card.findViewById(R.id.event_date);
+            TextView descvw = (TextView) card.findViewById(R.id.event_desc);
+
+            n.setText(name);
+            descvw.setText(desc);
+            datevw.setText(date);
+            ll.addView(card);
+        }
+
+
 //            ArrayList<String> namelist = DatabaseFactory.getNamelist();
 //            View aCard = inflater.inflate(R.layout.card, container, false);
             for (int i = 0; i < 1; i++) {
 //                String name = namelist.get(i);
-                View aCard = inflater.inflate(R.layout.card, container, false);
-                aCard.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                String name = "UCEN";
-                String desc = "Melvin Nguyen";
-                String date = "6/12/2017";
-//                int interest = 0;
-//                String uri = DatabaseFactory.getUri(name);
-//                String time = DatabaseFactory.getTime(name);
-//                int interest = DatabaseFactory.getInterest(uri);
-                CardView card = (CardView) aCard.findViewById(R.id.cv);
-                TextView n = (TextView) card.findViewById(R.id.event_name);
-                TextView datevw = (TextView) card.findViewById(R.id.event_date);
-                TextView descvw = (TextView) card.findViewById(R.id.event_desc);
-                n.setText(name);
-                descvw.setText(desc);
-                datevw.setText(date);
-
-                ll.addView(card);
+//                View aCard = inflater.inflate(R.layout.card, container, false);
+//                aCard.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+//                String name = "UCEN";
+//                String desc = "Melvin Nguyen";
+//                String date = "6/12/2017";
+////                int interest = 0;
+////                String uri = DatabaseFactory.getUri(name);
+////                String time = DatabaseFactory.getTime(name);
+////                int interest = DatabaseFactory.getInterest(uri);
+//                CardView card = (CardView) aCard.findViewById(R.id.cv);
+//                TextView n = (TextView) card.findViewById(R.id.event_name);
+//                TextView datevw = (TextView) card.findViewById(R.id.event_date);
+//                TextView descvw = (TextView) card.findViewById(R.id.event_desc);
+//                n.setText(name);
+//                descvw.setText(desc);
+//                datevw.setText(date);
+//
+//                ll.addView(card);
             }
 //        }else{
 

@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private OkHttpClient client = new OkHttpClient();
     private Marker CurrentPositionMarker;
     private static final String DETAIL_END = "https://maps.googleapis.com/maps/api/place/details/json";
-    private static final String PLACES_KEY = "AIzaSyChQJFJOlllWIGylBRzDAbSdOnsP_8Dno0";
+    private static final String PLACES_KEY = "AIzaSyBhT_ZEA-BghTy2DYXfGNNH6UbzYOQQoW0";
     //String used for photo
     private static final int PICK_IMAGE_REQUEST = 9876;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
