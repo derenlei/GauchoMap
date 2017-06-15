@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -60,11 +59,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.R.attr.name;
-import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.DatabaseFactory.getNamelist;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.EventFragment.newInstance;
 import static edu.ucsb.cs.cs190i.derenlei.GauchoMap.R.id.map;
-import static java.lang.Boolean.FALSE;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -98,16 +94,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String photoFileName;
     public final String APP_TAG = "MyCustomApp";
     //String used for database
-    static public GauchomapDatabaseHelper helper;
-    static public SQLiteDatabase DB;
+    static public GauchomapDatabaseHelper helper = MainActivity.helper;
+    static public SQLiteDatabase DB = MainActivity.DB;
     public static Boolean setMarker;
+    public static String username = LoginActivity.username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GauchomapDatabaseHelper.Initialize(this);
-        helper = GauchomapDatabaseHelper.GetInstance();
-
 
         setMarker = false;
         setContentView(R.layout.activity_maps);
@@ -549,7 +543,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         marker.remove();
 
         //this line need to be changed
-        int User = 0;
+        String User = username;
 
         EventFragment frag = newInstance(Uri.parse(url),User,longitude,latitude);
         frag.show(getSupportFragmentManager().beginTransaction(), "tag");
@@ -624,7 +618,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Double latitude = targetMarkerPosition.latitude;
 
                         //this line need to be changed
-                        int User = 0;
+                        String User = username;
 
                         EventFragment frag = newInstance(takenPhoto,User,longitude,latitude);
                         frag.show(getSupportFragmentManager().beginTransaction(), "tag");
@@ -645,7 +639,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Double latitude = targetMarkerPosition.latitude;
 
                         //this line need to be changed
-                        int User = 0;
+                        String User = username;
 
                         EventFragment frag = newInstance(takenPhoto,User,longitude,latitude);
                         frag.show(getSupportFragmentManager().beginTransaction(), "tag");

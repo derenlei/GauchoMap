@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -26,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
+    public static String username;
 
     //Facebook login button
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
@@ -145,6 +144,8 @@ public class LoginActivity extends AppCompatActivity {
             pScreen.putExtra("surname", profile.getLastName());
             pScreen.putExtra("imageUrl", profile.getProfilePictureUri(200,200).toString());
             startActivity(pScreen);
+            String username = profile.getName();
+            //userid = Integer.parseInt(profile.getId());
         }
     }
 }

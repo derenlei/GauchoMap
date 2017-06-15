@@ -1,14 +1,12 @@
 package edu.ucsb.cs.cs190i.derenlei.GauchoMap;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.SearchView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +28,9 @@ public class MainActivity extends AppCompatActivity
     public static MapViewFragment mapFragment;
     public static MyEventsFragment myeventsFragment;
     public static SettingFragment settingFragment;
+    public static String username = LoginActivity.username;
+    static public GauchomapDatabaseHelper helper;
+    static public SQLiteDatabase DB;
 
 
 
@@ -47,7 +49,6 @@ public class MainActivity extends AppCompatActivity
 //
 //        }
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView =  navigationView.getHeaderView(0);
 
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity
         String name = inBundle.get("name").toString();
         String surname = inBundle.get("surname").toString();
         String imageUrl = inBundle.get("imageUrl").toString();
+
+        GauchomapDatabaseHelper.Initialize(this);
+        helper = GauchomapDatabaseHelper.GetInstance();
 
         TextView user_name = (TextView) hView.findViewById(R.id.user_name);
         user_name.setText(name + " " + surname);

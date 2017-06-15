@@ -6,18 +6,16 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import static android.R.attr.name;
-
 /**
  * Created by Zichen Sun on 2/6/2017.
  */
 
 public class DatabaseFactory {
-    static GauchomapDatabaseHelper helper = MapsActivity.helper;
-    static SQLiteDatabase DB = MapsActivity.DB;
+    static GauchomapDatabaseHelper helper = MainActivity.helper;
+    static SQLiteDatabase DB = MainActivity.DB;
     //Database helping function
     //NEED
-    static public String saveandgetName(int user, String name, String url, String Event, Double Longitude, Double Latitude, String time){
+    static public String saveandgetName(String user, String name, String url, String Event, Double Longitude, Double Latitude, String time){
         DB = helper.getWritableDatabase();
         int Interest = 0;
         if(is_present(url)){
@@ -42,17 +40,17 @@ public class DatabaseFactory {
     }
 
     //NEED
-    static public int getUser(String name){
+    static public String getUser(String name){
         String url = getUri(name);
         DB = helper.getReadableDatabase();
-        int User = 0;
+        String User = "";
         Cursor cursor = DB.rawQuery("SELECT User FROM Map WHERE Map.Uri = '"+url+"'",null);
         if(!is_present(url));
         else{
             cursor.moveToFirst();
-            User = cursor.getInt(0);
+            User = cursor.getString(0);
             while (!cursor.isAfterLast()) {
-                User=cursor.getInt(0);
+                User=cursor.getString(0);
                 // do something useful with these
                 cursor.moveToNext();
             }
@@ -62,16 +60,16 @@ public class DatabaseFactory {
         return User;
     }
 
-    static public int getUserByUri(String url){
+    static public String getUserByUri(String url){
         DB = helper.getReadableDatabase();
-        int User = 0;
+        String User = "";
         Cursor cursor = DB.rawQuery("SELECT User FROM Map WHERE Map.Uri = '"+url+"'",null);
         if(!is_present(url));
         else{
             cursor.moveToFirst();
-            User = cursor.getInt(0);
+            User = cursor.getString(0);
             while (!cursor.isAfterLast()) {
-                User=cursor.getInt(0);
+                User=cursor.getString(0);
                 // do something useful with these
                 cursor.moveToNext();
             }
@@ -100,7 +98,7 @@ public class DatabaseFactory {
         return Interest;
     }
 
-    static public ArrayList<String> getNamelistOfUser(int User){
+    static public ArrayList<String> getNamelistOfUser(String User){
         ArrayList<String> array = new ArrayList<>();
         DB = helper.getReadableDatabase();
         Cursor result = DB.rawQuery("SELECT Map.Name FROM Map WHERE Map.User = '"+User+"'",null);

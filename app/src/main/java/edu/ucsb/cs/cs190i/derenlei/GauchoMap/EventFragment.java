@@ -2,29 +2,21 @@ package edu.ucsb.cs.cs190i.derenlei.GauchoMap;
 
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.graphics.Color;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
-
-import static android.R.attr.fragment;
 
 /**
  * Created by Zichen Sun on 2/6/2017.
@@ -39,13 +31,13 @@ public class EventFragment extends android.support.v4.app.DialogFragment  {
     private FragmentActivity fragmentActivity;
     public static FragmentManager fragmentManager;
 
-    public static EventFragment newInstance(Uri uri, int User, Double longitude, Double latitude) {
+    public static EventFragment newInstance(Uri uri, String User, Double longitude, Double latitude) {
         EventFragment frag = new EventFragment();
         Bundle args = new Bundle();
         args.putString("title", uri.toString());
         args.putDouble("longitude", longitude);
         args.putDouble("latitude",latitude);
-        args.putInt("User",User);
+        args.putString("User",User);
         frag.setArguments(args);
         return frag;
     }
@@ -101,7 +93,7 @@ public class EventFragment extends android.support.v4.app.DialogFragment  {
                 String time = String.valueOf(event_time.getText());
                 Double longitude = (Double) getArguments().get("longitude");
                 Double latitude = (Double) getArguments().get("latitude");
-                int User = (int)getArguments().get("User");
+                String User = (String)getArguments().get("User");
                 DatabaseFactory.saveandgetName(User,name,Uri,event,longitude,latitude,time);
                 DatabaseFactory.TEST(name);
                 DatabaseFactory.update();
