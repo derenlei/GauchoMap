@@ -23,8 +23,9 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:id="@+id/nameButton"
             android:text="Name"/>
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/name_text"
             android:inputType="textAutoComplete"
             android:layout_width="match_parent"
@@ -43,10 +44,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/infoButton"
             android:text="Info"
             android:paddingRight="10dp"/>
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/event_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,14 +78,32 @@
             android:textSize="20sp"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/get_button"
-        android:background="@color/colorAccent"
-        android:text="Save"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
+    <LinearLayout
+        android:id="@+id/event_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:background="@color/colorAccent"
+            android:text="Edit"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <Button
+            android:id="@+id/get_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="Back"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+    </LinearLayout>
 
 </LinearLayout>
