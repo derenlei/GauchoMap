@@ -1,6 +1,7 @@
 package edu.ucsb.cs.cs190i.derenlei.GauchoMap;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,7 +22,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -99,12 +103,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static Boolean setMarker;
     public static String username = LoginActivity.username;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setMarker = false;
         setContentView(R.layout.activity_maps);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.maptoolbar);
+        Button back_button = (Button)findViewById(R.id.toolbar_back);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapsActivity.super.onBackPressed();
+                /*
+                Intent setIntent = new Intent(Intent.ACTION_MAIN);
+                setIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(setIntent);
+                */
+            }
+        });
+
+
         locations = new ArrayList<>();
         //webServerController = new WebServerController();
         //WebServerController.retrieveLocations(this);
