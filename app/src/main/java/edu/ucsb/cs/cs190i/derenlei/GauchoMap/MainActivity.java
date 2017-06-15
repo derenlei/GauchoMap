@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -145,14 +144,12 @@ public class MainActivity extends AppCompatActivity
 //            ft.commit();
         } else if (id == R.id.list_view) {
             ft.replace(R.id.fragment_container, listFragment);
-            ft.commit();
+            ft.detach(listFragment).attach(listFragment).commit();
         } else if (id == R.id.my_events) {
             ft.replace(R.id.fragment_container, myeventsFragment);
-            ft.commit();
-        } else if (id == R.id.setting) {
-            ft.replace(R.id.fragment_container, settingFragment);
-            ft.commit();
-        } else if (id == R.id.logout) {
+            ft.detach(myeventsFragment).attach(myeventsFragment).commit();
+        }
+        else {
             LoginManager.getInstance().logOut();
             Intent login = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(login);

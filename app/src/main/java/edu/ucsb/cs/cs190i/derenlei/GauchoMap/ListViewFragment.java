@@ -1,14 +1,19 @@
 package edu.ucsb.cs.cs190i.derenlei.GauchoMap;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,71 +37,64 @@ public class ListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_list_view, container, false);
         TextView text = (TextView) v.findViewById(R.id.list_textvw);
-//        ArrayList<String> namelist = getNamelist;
-//        Boolean b = !d.is_empty();
-//        ArrayList<CardView> cards = new ArrayList();
-        LinearLayout ll = new LinearLayout(getActivity());
-        ll.setOrientation(LinearLayout.VERTICAL);
-        ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-//
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.rView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         if (!DatabaseFactory.is_empty()) {
-            System.out.print("hi");
+            ArrayList<String> nameList = DatabaseFactory.getNamelist();
+            RVAdapter mAdapter = new RVAdapter(nameList);
+            recyclerView.setAdapter(mAdapter);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setHasFixedSize(true);
         }
-
-        ArrayList<String> namelist = DatabaseFactory.getNamelist();
-
-        for (int i = 0; i < namelist.size(); i++) {
-            String name = namelist.get(i);
-            String uri = DatabaseFactory.getUri(name);
-            String desc = "Melvin Nguyen";
-            String date = DatabaseFactory.getTime(uri);
-
-            View aCard = inflater.inflate(R.layout.card, container, false);
-            CardView card = (CardView) aCard.findViewById(R.id.cv);
-
-            TextView n = (TextView) card.findViewById(R.id.event_name);
-            TextView datevw = (TextView) card.findViewById(R.id.event_date);
-            TextView descvw = (TextView) card.findViewById(R.id.event_desc);
-
-            n.setText(name);
-            descvw.setText(desc);
-            datevw.setText(date);
-            ll.addView(card);
+        else{
+            text.setText("No events nearby");
         }
 
 
-//            ArrayList<String> namelist = DatabaseFactory.getNamelist();
-//            View aCard = inflater.inflate(R.layout.card, container, false);
-            for (int i = 0; i < 1; i++) {
-//                String name = namelist.get(i);
-//                View aCard = inflater.inflate(R.layout.card, container, false);
-//                aCard.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-//                String name = "UCEN";
-//                String desc = "Melvin Nguyen";
-//                String date = "6/12/2017";
-////                int interest = 0;
-////                String uri = DatabaseFactory.getUri(name);
-////                String time = DatabaseFactory.getTime(name);
-////                int interest = DatabaseFactory.getInterest(uri);
-//                CardView card = (CardView) aCard.findViewById(R.id.cv);
-//                TextView n = (TextView) card.findViewById(R.id.event_name);
-//                TextView datevw = (TextView) card.findViewById(R.id.event_date);
-//                TextView descvw = (TextView) card.findViewById(R.id.event_desc);
-//                n.setText(name);
-//                descvw.setText(desc);
-//                datevw.setText(date);
+
+
+
+
+//        TextView text = (TextView) v.findViewById(R.id.list_textvw);
 //
+//        LinearLayout ll = new LinearLayout(getActivity());
+//        ll.setOrientation(LinearLayout.VERTICAL);
+//        ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+//
+//        ArrayList<String> nameList = DatabaseFactory.getNamelist();
+//
+//        if (!DatabaseFactory.is_empty()) {
+//            for (int i = 0; i < nameList.size(); i++) {
+//                text.setText("");
+//                String name = nameList.get(i);
+//                String uri = DatabaseFactory.getUri(name);
+//                String desc = "Melvin Nguyen";
+//                String date = DatabaseFactory.getTime(uri);
+//
+//                View aCard = inflater.inflate(R.layout.card, container, false);
+//                CardView card = (CardView) aCard.findViewById(R.id.cv);
+//
+//                ImageView imgView = (ImageView) card.findViewById(R.id.event_photo);
+//                TextView name_vw = (TextView) card.findViewById(R.id.event_name);
+//                TextView date_vw = (TextView) card.findViewById(R.id.event_date);
+//                TextView desc_vw = (TextView) card.findViewById(R.id.event_desc);
+//
+//                imgView.setImageURI(Uri.parse(uri));
+//                name_vw.setText(name);
+//                date_vw.setText(date);
+//                desc_vw.setText(desc);
 //                ll.addView(card);
-            }
-//        }else{
-
-//        text.setText("No events nearby");
+//            }
+//        }
+//        else{
+//            text.setText("No events nearby");
 //        }
 //
-//
-        v = ll;
+//        v = ll;
 //        // Inflate the layout for this fragment
         return v;
     }

@@ -1,26 +1,31 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.ucsb.cs.cs190i.derenlei.GauchoMap.ListViewFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="150px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:weightSum="1">
+        <!-- TODO: Update blank fragment layout -->
 
         <TextView
             android:id="@+id/list_textvw"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="150px"
-            android:text="hi"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            android:paddingLeft="30px"
+            android:paddingRight="30dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
 
 </FrameLayout>
